@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doğal Lojistik </title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+
+       
+       /* Genel Ayarlar */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        /* Üst Bilgi (Başlık) */
+        header.top-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background: #003366;
+            color: white;
+        }
+
+        .top-bar .top-left a,
+        .top-bar .top-right a {
+            color: white;
+            margin-right: 15px;
+            text-decoration: none;
+        }
+
+        .top-bar .top-left i,
+        .top-bar .top-right i {
+            font-size: 1.5rem;
+        }
+
+        .top-bar .button {
+            padding: 8px 15px;
+            background: #e84242;
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .top-bar .button:hover {
+            background: #ff3f28;
+        }
+
+        /* Logo ve Menü */
+
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 20px 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-nav .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .main-nav .logo-container img {
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        .main-nav .logo {
+            color: #003366;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .main-nav ul li a {
+            color: #333;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .main-nav ul li a:hover {
+            color: #e84242;
+        }
+
+
+         /* Hero Bölümü */
+         .hero {
+            background: url('images/paket1.jpg') no-repeat center center/cover;
+            height: 85vh; /* Ekranın %85'ini kaplar */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            background-size: cover;
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .hero-button {
+            padding: 12px 25px;
+            background: #e84242;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .hero-button:hover {
+            background: #ff3f28;
+        }
+
+        /* Hizmetlerimiz */
+        .services-section {
+            padding: 80px 50px;
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        .services-section h2 {
+            font-size: 2.5rem;
+            color: #003366;
+            margin-bottom: 40px;
+        }
+
+        .services-section p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .service-item {
+            margin-bottom: 20px;
+        }
+
+        .service-item h3 {
+            font-size: 1.5rem;
+            color: #003366;
+        }
+
+        .service-item p {
+            margin: 5px 0 15px;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            background: #003366;
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .footer .social-icons a {
+            margin: 0 15px;
+            color: white;
+            font-size: 1.4rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer .social-icons a:hover {
+            color: #e84242;
+        }
+
+        .footer p {
+            font-size: 1rem;
+            margin-top: 15px;
+            font-weight: 300;
+        }
+    </style>
+</head>
+<body>
+  
+    <!-- Üst Bilgi (Header) -->
+<header class="top-bar">
+    <div class="top-left">
+        <a href="https://wa.me/905368735880" target="_blank" title="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="#" target="_blank" title="Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="#" target="_blank" title="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+        </a>
+    </div>
+    <div class="top-right">
+        <a href="mailto:info@esalco.com" class="button">E-Posta Yolu</a>
+        
+        <a href="#" class="button" onclick="showForm()">Kariyer</a>
+
+        <!DOCTYPE html>
+        <html lang="tr">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>CV Gönderim Formu</title>
+            <style>
+                #careerForm {
+                    display: none; /* Başlangıçta form gizlenir */
+                }
+        
+                form label {
+                    font-weight: bold;
+                }
+        
+                form input[type="text"],
+                form input[type="email"],
+                form input[type="file"] {
+                    width: 100%;
+                    padding: 8px;
+                    margin: 10px 0;
+                    box-sizing: border-box;
+                }
+        
+                form input[type="submit"] {
+                    background-color: #007BFF;
+                    color: #fff;
+                    border: none;
+                    padding: 10px 15px;
+                    cursor: pointer;
+                    font-size: 16px;
+                }
+        
+                form input[type="submit"]:hover {
+                    background-color: #0056b3;
+                }
+        
+                .email-links {
+                    margin-top: 20px;
+                }
+        
+                .email-links a {
+                    display: block;
+                    margin-bottom: 10px;
+                    text-decoration: none;
+                    color: #007BFF;
+                }
+        
+                .email-links a:hover {
+                    text-decoration: underline;
+                }
+            </style>
+        </head>
+        <body>
+            <!-- CV Gönderim Formu -->
+            <div id="careerForm">
+                <h2>CV'nizi Yükleyin</h2>
+                <form id="cvForm" onsubmit="sendEmail(event)">
+                    <label for="name">Adınız:</label>
+                    <input type="text" id="name" name="name" placeholder="Adınızı giriniz" required>
+                    
+                    <label for="email">E-posta:</label>
+                    <input type="email" id="email" name="email" placeholder="E-posta adresinizi giriniz" required>
+                
+                    <label for="cv">CV Yükleyin:</label>
+                    <input type="file" id="cv" name="cv" accept=".pdf, .doc, .docx" required>
+                
+                    <input type="submit" value="Gönder">
+                </form>
+        
+                <!-- Alternatif E-posta Gönderim Bağlantıları -->
+                <div class="email-links">
+                    <h3>Alternatif E-posta Gönderimi:</h3>
+                    <a href="mailto:doganaylogistics@gmail.com">E-posta Gönder</a>
+                    <a href="mailto:doganaylogistics@gmail.com?subject=Konu&body=Bu%20bir%20test%20mesajıdır.">Önceden Doldurulmuş E-posta Gönder</a>
+                </div>
+            </div>
+        
+            <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+            <script>
+                // EmailJS başlatma
+                (function () {
+                    emailjs.init("YOUR_EMAILJS_USER_ID"); // EmailJS kullanıcı kimliği
+                })();
+        
+                /**
+                 * Formu gösterme fonksiyonu
+                 */
+                function showForm() {
+                    document.getElementById("careerForm").style.display = "block";
+                }
+        
+                /**
+                 * Form gönderim işlemi ve e-posta gönderme
+                 * @param {Event} event - Form submit olayı
+                 */
+                function sendEmail(event) {
+                    event.preventDefault(); // Varsayılan form gönderimini engelle
+        
+                    const formData = new FormData(document.getElementById("cvForm"));
+        
+                    // EmailJS ile e-posta gönderme
+                    emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                        name: formData.get("name"),
+                        email: formData.get("email"),
+                        message: "CV dosyası ektedir.",
+                    })
+                    .then(() => {
+                        alert("E-posta başarıyla gönderildi!");
+                        window.location.href = "thank-you.html"; // Teşekkür sayfasına yönlendirme
+                    })
+                    .catch((error) => {
+                        console.error("Hata:", error);
+                        alert("Bir hata oluştu. Lütfen tekrar deneyin.");
+                    });
+                }
+            </script>
+        </body>
+        </html>
+    </div>
+</header>
+
+ <!-- Logo ve Menü -->
+<nav class="main-nav">
+    <div class="logo-container">
+        <img src="images/Logo2.png" alt="Doğanay Lojistik Logosu">
+        <div class="logo">
+            <span class="company-name">Doğanay Lojistik Ltd. Şti</span>
+        </div>
+    </div>
+    <ul>
+        <li><a href="#">Ana Sayfa</a></li>
+        <li><a href="#services">Hizmetler</a></li>
+        <li><a href="#">Hakkımızda</a></li>
+    </ul>
+</nav>
+
+
+
+
+
+
+
+
+
+    <!-- Ana İçerik (Hero Bölümü) -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="main-image">
+            <img src="images/Ekran1.png" alt="Ana Görsel" />
+        </div>
+        <h1>Yüksek Kalite Paketleme ve Elleçleme Hizmetleri</h1>
+        <p>Profesyonel lojistik çözümler ile işlerinizi kolaylaştırıyoruz.</p>
+        <!-- WhatsApp Yönlendirme Butonu -->
+        <a href="https://wa.me/905368735880?text=Merhaba,%20size%20ulaşmak%20istiyorum." 
+           class="hero-button" 
+           target="_blank">
+           Bizimle İletişime Geç
+        </a>
+    </div>
+</section>    
+
+
+
+<!-- Nasıl Çalışıyoruz? -->
+<section id="how-we-work" class="how-we-work-section">
+    <div class="container">
+        <header>
+            <h2>Nasıl Çalışıyoruz?</h2>
+        </header>
+
+        <!-- Sipariş Süreci -->
+        <div class="work-process">
+            <h3>Sipariş Süreci</h3>
+            <p>Doğanay Lojistik olarak, her aşamada sizlere kolaylık ve şeffaflık sunmayı hedefliyoruz. Sipariş sürecimiz şu adımlardan oluşur:</p>
+            <ol>
+                <li><strong>İhtiyacınızı Belirleyin:</strong> Taşıma, depolama veya paketleme ihtiyaçlarınızı detaylı bir şekilde analiz ediyoruz.</li>
+                <li><strong>Teklif Alın:</strong> İhtiyacınıza özel, şeffaf ve uygun fiyatlandırmalar sunuyoruz.</li>
+                <li><strong>Planlama ve Hazırlık:</strong> İş planınızı ve lojistik sürecinizi detaylı bir şekilde hazırlayıp size sunuyoruz.</li>
+                <li><strong>Operasyon Başlıyor:</strong> Ekibimiz, siparişinizi en hızlı ve güvenli şekilde işleme alır ve uygulamaya koyar.</li>
+            </ol>
+        </div>
+
+        <!-- Takip ve İzleme Hizmetleri -->
+        <div class="tracking-services">
+            <h3>Takip ve İzleme Hizmetleri</h3>
+            <p>Müşterilerimize tam şeffaflık sağlamak amacıyla gelişmiş takip ve izleme hizmetleri sunuyoruz:</p>
+            <ul>
+                <li><strong>Canlı Takip:</strong> Gönderilerinizin her aşamasını anlık olarak takip edin, nerede olduğunu her zaman bilirsiniz.</li>
+                <li><strong>Bilgilendirme Mesajları:</strong> Gönderinizin önemli aşamalarında otomatik olarak bildirimler alarak her şeyden haberdar olun.</li>
+                <li><strong>Kişisel Destek:</strong> 7/24 müşteri hizmetlerimiz, herhangi bir sorunuz veya yardıma ihtiyaç duyduğunuz her an yanınızda.</li>
+            </ul>
+        </div>
+
+      <!-- Zamanında Teslim Garantisi -->
+      <div class="on-time-delivery">
+        <h3>Zamanında Teslim Garantisi</h3>
+        <p>Doğanay Lojistik, her gönderinin zamanında teslim edilmesi için titizlikle çalışmaktadır:</p>
+        <ul>
+            <li><strong>Optimize Rotalar:</strong> Teslimatları hızlandırmak için en verimli güzergahları belirliyor, zaman kaybını en aza indiriyoruz.</li>
+            <li><strong>Profesyonel Ekip:</strong> Deneyimli ekibimiz, teslimat sürecinin her aşamasını dikkatle yönetir.</li>
+            <li><strong>Memnuniyet Garantisi:</strong> Zamanında teslimat ve güvenilir hizmet bizim için bir önceliktir. Memnuniyetiniz bizim için çok önemlidir.</li>
+        </ul>
+    </div>
+</div>
+</section>
+
+<!-- Ekstra Düzenlemeler -->
+<style>
+.how-we-work-section {
+    padding: 60px 0;
+    background-color: #ffffff;
+    font-family: 'Arial', sans-serif;
+}
+
+.how-we-work-section h2, .how-we-work-section h3 {
+    font-size: 2rem;
+    color: #003366;
+}
+
+.work-process, .tracking-services, .on-time-delivery {
+    margin-bottom: 40px;
+}
+
+.work-process ol, .tracking-services ul, .on-time-delivery ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.work-process li, .tracking-services li, .on-time-delivery li {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.how-we-work-section p {
+    font-size: 1.1rem;
+    color: #003366;
+    line-height: 1.6;
+}
+
+.how-we-work-section strong {
+    color: #003366;
+}
+
+.how-we-work-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+@media (max-width: 768px) {
+    .how-we-work-section h2 {
+        font-size: 1.8rem;
+    }
+
+    .how-we-work-section h3 {
+        font-size: 1.6rem;
+    }
+
+    .work-process li, .tracking-services li, .on-time-delivery li {
+        font-size: 1rem;
+    }
+}
+</style>
+
+
+
+<!-- Hizmetlerimiz Görseli -->
+<div class="services-image">
+    <img src="images/ELLEÇLEME2.png" alt="Hizmetlerimiz Görseli">
+</div>
+
+<!-- CSS -->
+<style>
+    .services-image {
+        background-color: white;
+    }
+</style>
+
+
+
+
+
+
+    
+
+
+    <!-- Hizmetlerimiz -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <div class="carousel">
+                <div class="slides">
+                   
+
+
+                            <h2>Hizmetlerimiz</h2>
+                            <p>Paketleme Çözümleriyle Güvenli ve Hızlı Taşıma</p>
+                            <p>
+                                Lojistik sektöründe, ürünlerin güvenli bir şekilde taşınabilmesi için doğru paketleme büyük önem taşır. Biz, müşterilerimizin ürünlerini en yüksek standartlarda paketleyerek, hem taşımayı hem de depolamayı daha verimli hale getiriyoruz. İşte sunduğumuz paketleme hizmetlerinden bazıları:
+                            </p>
+                            <div class="service-item">
+                                <h3>1. Özel Paketleme Çözümleri</h3>
+                                <p>Müşterilerimizin ihtiyaçlarına göre, her tür ürüne uygun özel paketleme çözümleri sunuyoruz.</p>
+                            </div>
+                            <div class="service-item">
+                                <h3>2. Hızlı ve Verimli Ambalajlama</h3>
+                                <p>Taşıma sürecinizi hızlandırmak için en verimli ambalajlama yöntemlerini kullanıyoruz.</p>
+                            </div>
+                            <div class="service-item">
+                                <h3>3. Çevre Dostu Ambalaj Malzemeleri</h3>
+                                <p>Geri dönüştürülebilir ve doğa dostu paketleme malzemeleri kullanıyoruz.</p>
+                            </div>
+                            <div class="service-item">
+                                <h3>4. İleri Düzey Koruma Teknikleri</h3>
+                                <p>Kırılabilir ürünler için tamponlama ve koruyucu malzemelerle güvenlik sağlıyoruz.</p>
+                            </div>
+                            <div class="service-item">
+                                <h3>5. Yedek Parça ve Aksesuar Paketleme</h3>
+                                <p>Farklı parçalardan oluşan ürünleriniz için uygun paketleme çözümleri sunuyoruz.</p>
+                            </div>
+                            <div class="service-item">
+                                <h3>6. Depolama ve Paketleme Entegrasyonu</h3>
+                                <p>Depolama ve paketleme hizmetlerini birleştirerek süreçleri profesyonelce yönetiyoruz.</p>
+                            </div>
+                            <div class="service-item">
+                                <h3>7. Kişiye Özel Paketleme Çözümleri</h3>
+                                <p>Marka kimliğinizi yansıtan estetik paketlerle özel ambalaj hizmeti sunuyoruz.</p>
+                            </div>
+                        </div>
+                </div>
+                <div class="dots">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        /* Görseli küçültmek için */
+        .responsive-image {
+            max-width: 50%; /* Görsel genişliğini %50 olarak ayarlayın */
+            height: auto; /* Oranları koruyarak yüksekliği otomatik ayarlayın */
+            display: block; /* Görselin çevresindeki boşluklardan etkilenmemesi için */
+            margin: 0 auto; /* Görseli ortalamak için */
+        }
+        </style>
+
+
+
+        
+   <!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Doğanay Lojistik - Hızlı, Güvenli ve Profesyonel Hizmet</h1>
+        <p>Yük taşıma, paketleme ve eleman desteği gibi lojistik hizmetlerde sektördeki lider çözüm ortağınız.</p>
+    </div>
+</section>
+
+
+
+
+
+<style>
+    /* Genel Stil Ayarları */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Görsel Galeri Stilleri */
+    #gallery {
+        margin-top: 50px;
+    text-align: center;
+    background-color: #f4f4f4;
+    padding: 40px 0;
+    display: flex;
+    justify-content: center; /* Ortalamak için */
+    align-items: center; /* Ortalamak için */
+    height: 700px; /* Galeri bölümünün yüksekliği */
+    }
+
+    .gallery-image {
+        width: 1420px; /* Genişlik */
+    height: 780px; /* Yükseklik */
+    object-fit: cover; /* Görseli uygun şekilde keserek oranını bozmadan sığdırır */
+    display: none;
+    transition: opacity 0.5s ease-in-out;
+    }
+
+    .gallery-image.active {
+        display: block;
+    }
+
+    .controls {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        top: -30px;
+    }
+
+    .control-btn {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        padding: 10px;
+        cursor: pointer;
+        border: none;
+        font-size: 20px;
+        transition: background-color 0.3s;
+    }
+
+    .control-btn:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    /* Hakkımızda Bölümü */
+    .services-section {
+        padding: 60px 0;
+        background-color: #fff;
+    }
+
+    .services-section h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .services-section p {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    ul li {
+        font-size: 16px;
+        margin: 10px 0;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- Görsel Galeri Bölümü -->
+<section id="gallery" class="gallery-section">
+    <div class="container">
+        <div class="carousel">
+            <div class="slides">
+                <!-- Görseller Burada Ekleniyor -->
+                <img src="images/1.png" alt="Görsel 1" class="gallery-image active">
+                <img src="images/2.pNg" alt="Görsel 2" class="gallery-image">
+                <img src="images/3.png" alt="Görsel 3" class="gallery-image">
+            </div>
+            <!-- Kontrol Butonları -->
+            <div class="controls">
+                <button class="control-btn" onclick="changeImage(-1)">&#10094;</button>
+                <button class="control-btn" onclick="changeImage(1)">&#10095;</button>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Görsel Galeri Bölümü Sonu -->
+
+<!-- Hakkımızda Bölümü -->
+<section id="services" class="services-section">
+    <div class="container">
+        <div class="carousel">
+            <div class="slides">
+                <img src="images/paket2.jpg" alt="Doğanay Lojistik" />
+                <div class="container">
+                    <div class="main-image">
+                        <h2>Hakkımızda</h2>
+                        <p>2018 yılında Kocaeli, Türkiye merkezli olarak kurulan <strong>Doğanay Lojistik</strong>, paketleme ve eleman desteği alanlarında uzmanlaşmış, yenilikçi çözümler sunan bir lojistik firmasıdır. Sektördeki temel hedefimiz, müşterilerimizin operasyonel ihtiyaçlarını hız ve kaliteyle karşılayarak iş süreçlerini kolaylaştırmak ve değer katmaktır.</p>
+                        <h2>Kurucumuzun İlham Veren Yolculuğu</h2>
+                        <p>Doğanay Lojistik’in kurucusu, 2001 yılında paketleme sektöründe işçi olarak başladığı kariyerini azim ve kararlılıkla bir başarı hikayesine dönüştürmüştür...</p>
+                        <h2>Neden Doğanay Lojistik?</h2>
+                        <ul>
+                            <li><strong>Uzmanlık ve Deneyim:</strong> Paketleme ve eleman desteği hizmetlerinde 20 yılı aşkın sektör tecrübesi.</li>
+                            <li><strong>Yenilikçi Çözümler:</strong> Müşteri ihtiyaçlarına uygun, esnek ve özelleştirilmiş lojistik çözümler.</li>
+                        </ul>
+                        <p><strong>Doğanay Lojistik: İşinizi Güvenceye Alan Çözüm Ortağınız!</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hakkımızda Bölümü Sonu -->
+
+<script>
+    let currentIndex = 0;
+    const images = document.querySelectorAll('.gallery-image');
+
+    function changeImage(direction) {
+        // Şu anki aktif resmin 'active' sınıfını kaldır
+        images[currentIndex].classList.remove('active');
+        
+        // Yeni index hesapla
+        currentIndex += direction;
+
+        // Döngüsel geçiş için sınırları kontrol et
+        if (currentIndex < 0) {
+            currentIndex = images.length - 1; // Son görsele git
+        } else if (currentIndex >= images.length) {
+            currentIndex = 0; // İlk görsele git
+        }
+
+        // Yeni aktif görseli göster
+        images[currentIndex].classList.add('active');
+    }
+</script>
+
+</body>
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+    <div class="spacing-top"></div>
+    <div class="row">
+    </div>
+</div>
+
+
+<title>Basit Web Sitesi</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+    }
+    video {
+        max-width: 100%;
+        height: auto;
+    }
+    h1 {
+        color: #ffffff;
+    }
+
+        
+        .spaced-image {
+            margin-top: 400px; /* Üst metin ile görsel arasına boşluk ekler */
+        }
+
+</style>
+</head>
+<body>
+
+
+<video width="1220" height="700" controls>
+    <source src="images/video.mp4" type="">
+</video>
+
+
+</body>
+
+        <!-- Footer Menu Section -->
+        <div class="col-lg-8 offset-lg-1">
+            <div class="row">
+                <!-- Contact and Social Media Section -->
+                <div class="col-md-4">
+                    <div class="footer-item address-widget">
+                        <h2 class="widget-title">İletişim</h2>
+                        </ul class="contact-info">
+                            <li>Telefon: <a href="tel:+905368735880">+90 536 873 58 80</a></li>
+                            <li>Telefon: <a href="tel:+905395283006">+90 539 528 30 06</a></li>
+                            <li>Adres: İstasyon Mah., Hüsnü Efe Cad. <br>Kocaeli / Kartepe</li>
+                        </ul>
+                    </div>
+
+                   
+                </div><!-- .col -->
+
+            </div>
+        </div><!-- .col -->
+
+    </div>
+
+    <div class="spacing-bottom"></div>
+
+</div>
+
+<div class="form-container">
+    
+
+    <title>Bizimle İletişime Geçin</title>
+   
+    <h1>Bizimle İletişime Geçin</h1>
+   
+
+
+
+    <form action="submit_form.php" method="POST">
+        <label for="name">Adınız:</label>
+        <input type="text" id="name surname" name="name" placeholder="Adınızı Soyadınızı giriniz" required>
+        
+        <label for="email">E-posta:</label>
+        <input type="email" id="email" name="email" placeholder="E-posta adresinizi giriniz" required>
+        
+        <label for="message">Mesajınız:</label>
+        <textarea id="message" name="message" placeholder="Mesajınızı buraya yazın" rows="5"></textarea>
+        
+        <button type="submit">Gönder</button>
+    </form>
+</div>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2024 Doğanay Lojistik Yer Hizmetleri Ltd.Şti. Tüm hakları saklıdır.</p>
+        <div class="social-icons">
+          <a href="https://wa.me/905368735880" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="#" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" target="_blank">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+        </div>
+    </footer>
+</body>
+</html>
